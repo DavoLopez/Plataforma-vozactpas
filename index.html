@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active & Passive Voice Masterclass - 45 Exercise Challenge & Verbs DB</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              500: '#f97316', // Naranja fresco y vibrante de la paleta
+              600: '#ea580c',
+              700: '#c2410c',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Transiciones fluidas */
+    .transition-all {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    /* Animación de pulso para el lector de audio */
+    @keyframes audio-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+    .playing-audio {
+      animation: audio-pulse 1s infinite ease-in-out;
+    }
+    /* Ocultar barra de scroll estéticamente */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans min-h-full flex flex-col selection:bg-brand-100 selection:text-brand-700">
+
+  <!-- Cabecera Principal -->
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="bg-brand-500 text-white p-2 rounded-xl shadow-md shadow-brand-500/20">
+          <i class="fa-solid fa-graduation-cap text-lg sm:text-xl"></i>
+        </div>
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-brand-500">B2 Grammar Lab</span>
+          <h1 class="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">Active & Passive Voice</h1>
+        </div>
+      </div>
+
+      <!-- Control de accesibilidad de audio global -->
+      <div class="flex items-center space-x-2 sm:space-x-4">
+        <div id="tts-global-indicator" class="hidden items-center space-x-2 bg-brand-50 border border-brand-200 px-3 py-1.5 rounded-full text-brand-600 text-xs font-medium">
+          <span class="flex h-2 w-2 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+          </span>
+          <span class="hidden sm:inline">Reproduciendo voz...</span>
+        </div>
+        <button onclick="stopAllSpeech()" class="p-2 text-gray-400 hover:text-red-500 transition-colors rounded-lg hover:bg-gray-100" title="Detener todo el audio">
+          <i class="fa-solid fa-circle-stop text-lg"></i>
+        </button>
+        <button onclick="toggleCheatSheet()" class="flex items-center space-x-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3.5 py-1.5 rounded-xl text-sm font-medium transition-all" title="Ver Chivato">
+          <i class="fa-solid fa-bolt text-brand-500"></i>
+          <span class="hidden sm:inline">El Chivato</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Pestañas de Navegación Principal -->
+  <nav class="bg-white border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-6">
+      <button onclick="switchMainTab('dashboard')" id="main-tab-dashboard" class="py-4 px-2 border-b-2 border-brand-500 font-bold text-sm text-brand-600 flex items-center gap-2 transition-all">
+        <i class="fa-solid fa-laptop-code"></i> Laboratorio de Estudio
+      </button>
+      <button onclick="switchMainTab('verbs')" id="main-tab-verbs" class="py-4 px-2 border-b-2 border-transparent font-semibold text-sm text-gray-500 hover:text-gray-700 flex items-center gap-2 transition-all">
+        <i class="fa-solid fa-spell-check text-brand-500"></i> Diccionario de Participios (A-Z)
+      </button>
+    </div>
+  </nav>
+
+  <!-- Panel Lateral: El Chivato (Cheat Sheet) -->
+  <div id="cheat-sheet" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out border-l border-gray-200 flex flex-col">
+    <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-brand-50 to-orange-100/30 flex-shrink-0">
+      <div class="flex items-center space-x-2.5">
+        <div class="bg-brand-500 text-white p-1.5 rounded-lg text-xs">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h2 class="text-lg font-bold text-gray-900">Resumen Rápido: El Chivato</h2>
+      </div>
+      <button onclick="toggleCheatSheet()" class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+    
+    <div class="p-6 overflow-y-auto flex-1 space-y-6 text-sm no-scrollbar">
+      <!-- Regla de oro -->
+      <div class="bg-brand-50 border-l-4 border-brand-500 p-4 rounded-r-xl">
+        <h3 class="font-bold text-brand-800 flex items-center gap-1.5">
+          <i class="fa-solid fa-star"></i> REGLA DE ORO
+        </h3>
+        <p class="text-brand-700 mt-1 leading-relaxed text-xs">
+          Para transformar a pasiva necesitas siempre: <br>
+          <strong class="font-semibold text-brand-900">Sujeto pasivo + Verbo BE (en el mismo tiempo de la activa) + Participio Pasado (-ed / 3ª columna)</strong>.
+        </p>
+      </div>
+
+      <!-- Cuándo usarla -->
+      <div class="space-y-3">
+        <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+          <i class="fa-solid fa-question-circle text-brand-500"></i> ¿Cuándo usamos la pasiva?
+        </h3>
+        <ul class="space-y-2 text-gray-600 pl-1 text-xs">
+          <li class="flex items-start gap-2">
+            <i class="fa-solid fa-check text-brand-500 mt-1 text-xs flex-shrink-0"></i>
+            <span>No sabemos quién hace la acción o no importa (ej: <em>The bank was robbed</em>).</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fa-solid fa-check text-brand-500 mt-1 text-xs flex-shrink-0"></i>
+            <span>Damos importancia al objeto o resultado (ej: <em>Gara's report was finished</em>).</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fa-solid fa-check text-brand-500 mt-1 text-xs flex-shrink-0"></i>
+            <span>Textos científicos, formales o prensa escrita (ej: <em>Antibiotics are used...</em>).</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fa-solid fa-check text-brand-500 mt-1 text-xs flex-shrink-0"></i>
+            <span>Si queremos mencionar al agente que hace la acción, usamos <strong class="text-gray-900 font-semibold">by</strong>.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Pronombres correspondientes -->
+      <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+        <h3 class="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-arrows-spin text-brand-500"></i> Transformación de Pronombres
+        </h3>
+        <div class="grid grid-cols-2 gap-4 text-center text-xs">
+          <div class="bg-white p-2 rounded-lg border border-gray-200">
+            <span class="block text-[10px] text-gray-400 font-semibold uppercase">Activa (Sujeto)</span>
+            <p class="text-gray-800 font-medium mt-1">I • You • He • She • It • We • They</p>
+          </div>
+          <div class="bg-brand-500/10 p-2 rounded-lg border border-brand-500/20">
+            <span class="block text-[10px] text-brand-500 font-semibold uppercase">Pasiva (Agente)</span>
+            <p class="text-brand-700 font-bold mt-1">me • you • him • her • it • us • them</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAS 9 ESTRUCTURAS VERBALES COMPLETAS -->
+      <div class="space-y-4">
+        <h3 class="font-semibold text-gray-900 flex items-center gap-2 border-b border-gray-150 pb-2">
+          <i class="fa-solid fa-bolt text-brand-500 animate-pulse"></i> Las 9 Estructuras Completas
+        </h3>
+        
+        <div class="space-y-3">
+          <!-- 1. Present Simple -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">1. Present Simple</span>
+              <span class="font-mono text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">am/is/are + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> study / studies • <span class="font-semibold text-gray-700">Pasiva:</span> The classes <span class="text-brand-600 font-bold">are studied</span>.</p>
+          </div>
+
+          <!-- 2. Present Continuous -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">2. Present Continuous</span>
+              <span class="font-mono text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">am/is/are being + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> is/are studying • <span class="font-semibold text-gray-700">Pasiva:</span> The song <span class="text-brand-600 font-bold">is being recorded</span>.</p>
+          </div>
+
+          <!-- 3. Present Perfect -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">3. Present Perfect</span>
+              <span class="font-mono text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">have/has been + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> has/have finished • <span class="font-semibold text-gray-700">Pasiva:</span> Many trees <span class="text-brand-600 font-bold">have been planted</span>.</p>
+          </div>
+
+          <!-- 4. Past Simple -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">4. Past Simple</span>
+              <span class="font-mono text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">was/were + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> painted / stole • <span class="font-semibold text-gray-700">Pasiva:</span> The portrait <span class="text-brand-600 font-bold">was painted</span>.</p>
+          </div>
+
+          <!-- 5. Past Continuous -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">5. Past Continuous</span>
+              <span class="font-mono text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">was/were being + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> was/were repairing • <span class="font-semibold text-gray-700">Pasiva:</span> Windows <span class="text-brand-600 font-bold">were being repaired</span>.</p>
+          </div>
+
+          <!-- 6. Past Perfect -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">6. Past Perfect</span>
+              <span class="font-mono text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">had been + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> had eaten / had lost • <span class="font-semibold text-gray-700">Pasiva:</span> The cake <span class="text-brand-600 font-bold">had been eaten</span>.</p>
+          </div>
+
+          <!-- 7. Future Simple -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">7. Future Simple</span>
+              <span class="font-mono text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">will be + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> will publish / will find • <span class="font-semibold text-gray-700">Pasiva:</span> Results <span class="text-brand-600 font-bold">will be published</span>.</p>
+          </div>
+
+          <!-- 8. Going to -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">8. Going to</span>
+              <span class="font-mono text-[9px] font-bold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded">am/is/are going to be + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> is going to build • <span class="font-semibold text-gray-700">Pasiva:</span> It <span class="text-brand-600 font-bold">is going to be built</span>.</p>
+          </div>
+
+          <!-- 9. Infinitives -->
+          <div class="bg-gray-50/50 p-2.5 rounded-xl border border-gray-100 transition-all hover:bg-gray-50">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-gray-900 text-xs">9. Infinitive with to</span>
+              <span class="font-mono text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded">to be + PP</span>
+            </div>
+            <p class="text-[11px] text-gray-500 leading-relaxed"><span class="font-semibold text-gray-700">Activa:</span> needs to do / wants to treat • <span class="font-semibold text-gray-700">Pasiva:</span> Needs <span class="text-brand-600 font-bold">to be done</span>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1: LABORATORIO DE ESTUDIO (DASHBOARD PRINCIPAL) -->
+  <main id="tab-content-dashboard" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- LADO IZQUIERDO: Teoría y Audio Guías (5 columnas) -->
+    <section class="lg:col-span-5 space-y-8">
+      
+      <!-- Introducción Sencilla para Principiantes -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-sm relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-32 h-32 bg-brand-500/5 rounded-full blur-2xl -mr-10 -mt-10"></div>
+        <div class="flex items-start space-x-4">
+          <div class="bg-brand-50 p-3 rounded-2xl text-brand-500">
+            <i class="fa-solid fa-lightbulb text-2xl"></i>
+          </div>
+          <div class="flex-1">
+            <span class="text-xs font-bold text-brand-500 uppercase tracking-widest">Aprende desde cero</span>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-gray-900 mt-0.5">¿Qué es la Voz Activa y Pasiva?</h2>
+            
+            <div class="mt-4 text-gray-600 space-y-3 leading-relaxed text-sm sm:text-base">
+              <p>
+                En realidad, el concepto es igual que en español:
+              </p>
+              <div class="grid grid-cols-1 gap-3 my-4">
+                <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 relative">
+                  <div class="absolute top-3 right-3 text-gray-300"><i class="fa-solid fa-user-gear"></i></div>
+                  <h4 class="font-bold text-gray-900 text-sm">Voz Activa (Focus en el Sujeto)</h4>
+                  <p class="text-xs text-gray-500 mt-1">El sujeto hace la acción directamente.</p>
+                  <p class="mt-2 text-sm font-semibold text-brand-600">"Someone stole my bike."</p>
+                  <span class="text-[11px] text-gray-400 block mt-0.5">(Alguien robó mi bici — Importa "quién")</span>
+                </div>
+                <div class="bg-brand-500/5 p-4 rounded-2xl border border-brand-500/10 relative">
+                  <div class="absolute top-3 right-3 text-brand-400"><i class="fa-solid fa-bicycle"></i></div>
+                  <h4 class="font-bold text-gray-900 text-sm">Voz Pasiva (Focus en el Objeto)</h4>
+                  <p class="text-xs text-gray-600/75 mt-1">El sujeto padece/recibe la acción.</p>
+                  <p class="mt-2 text-sm font-semibold text-brand-600">"My bike was stolen."</p>
+                  <span class="text-[11px] text-gray-400 block mt-0.5">(Mi bici fue robada — Importa "la bici")</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botón de Audio-Lectura de esta sección -->
+            <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-ear-listen text-brand-500 text-xs sm:text-sm animate-pulse"></i>
+                <span class="text-xs text-gray-500 font-medium">¿Prefieres escuchar?</span>
+              </div>
+              <button onclick="speakText('active-passive-intro', 'en')" class="audio-btn flex items-center space-x-2 bg-brand-500 hover:bg-brand-600 text-white px-4.5 py-2 rounded-xl text-xs font-semibold shadow-md shadow-brand-500/10 hover:shadow-brand-500/20 transition-all">
+                <i class="fa-solid fa-volume-high"></i>
+                <span>Escuchar en Inglés</span>
+              </button>
+            </div>
+            
+            <div id="active-passive-intro" class="hidden">
+              When we use active verbs, we normally focus on the person or thing that does the action. Someone stole my bike. However, when we use passive verbs, we focus more on the action or thing. My bike was stolen.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabla de Conversión Gramatical Basada en la Fotocopia 7 -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-sm space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <span class="text-xs font-bold text-brand-500 uppercase tracking-widest">Guía de la Fotocopia 7</span>
+            <h3 class="text-xl font-extrabold text-gray-900 mt-0.5">Fórmulas por Tiempos Verbales</h3>
+          </div>
+          
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </span>
+            <input type="text" id="tense-search" oninput="filterTenses()" placeholder="Buscar tiempo..." class="w-full sm:w-48 pl-8 pr-4 py-1.5 text-xs bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-500 focus:bg-white transition-all">
+          </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-gray-100 no-scrollbar">
+          <table class="min-w-full divide-y divide-gray-200 text-sm">
+            <tbody id="tenses-table-body" class="bg-white divide-y divide-gray-100">
+              <!-- PRESENT TENSES -->
+              <tr class="bg-orange-50/60 text-brand-700 font-bold text-xs uppercase tracking-wide">
+                <td colspan="4" class="px-4 py-2.5"><i class="fa-solid fa-calendar-day mr-1.5"></i> Present Tenses / Tiempos de Presente</td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Present Simple</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">Am/Is/Are + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I make a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake is made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake is made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Present Continuous</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">Am/Is/Are being + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I am making a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake is being made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake is being made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Present Perfect</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">Have/Has been + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I have made a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake has been made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake has been made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+
+              <!-- PAST TENSES -->
+              <tr class="bg-orange-50/60 text-brand-700 font-bold text-xs uppercase tracking-wide">
+                <td colspan="4" class="px-4 py-2.5"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Past Tenses / Tiempos de Pasado</td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Past Simple</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">Was/Were + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I made a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake was made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake was made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Past Continuous</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">Was/Were being + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I was making a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake was being made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake was being made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Past Perfect</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">Had been + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I had made a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake had been made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake had been made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+
+              <!-- FUTURE & OTHER STRUCTURES -->
+              <tr class="bg-orange-50/60 text-brand-700 font-bold text-xs uppercase tracking-wide">
+                <td colspan="4" class="px-4 py-2.5"><i class="fa-solid fa-hourglass-half mr-1.5"></i> Future & Others / Futuros y Otros</td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Future Simple</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">Will be + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I will make a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake will be made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake will be made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Going to</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">Am/Is/Are going to be + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I am going to make a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake is going to be made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake is going to be made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+              <tr class="tense-row hover:bg-gray-50/50 transition-colors">
+                <td class="px-4 py-3.5 font-bold text-gray-900 text-xs">Infinitive + to</td>
+                <td class="px-4 py-3.5 text-xs"><span class="bg-orange-50 text-brand-600 font-semibold px-2 py-1 rounded">to be + PP</span></td>
+                <td class="px-4 py-3.5">
+                  <div class="text-[11px] text-gray-400">A: I want to make a cake.</div>
+                  <div class="text-xs font-semibold text-gray-800">P: A cake wants to be made.</div>
+                </td>
+                <td class="px-4 py-3.5 text-center">
+                  <button onclick="speakText('A cake wants to be made', 'en')" class="text-brand-500 hover:text-brand-600 p-1"><i class="fa-solid fa-volume-high"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- LADO DERECHO: Zona de Práctica Interactiva (7 columnas) -->
+    <section class="lg:col-span-7 space-y-8">
+      
+      <!-- Ejercicio 4: Completar Espacios (45 EJERCICIOS CON PESTAÑAS Y DIAGNÓSTICO) -->
+      <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-sm space-y-6">
+        <div>
+          <span class="bg-brand-500/10 text-brand-600 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">Ejercicio 4 • El Gran Reto</span>
+          <h3 class="text-xl font-bold text-gray-900 mt-2">Completa con Be + Participio Pasado</h3>
+          <p class="text-xs text-gray-500 mt-1">Hemos diseñado un total de **45 oraciones de práctica** (exactamente 5 por cada tiempo verbal clave). Escribe la estructura pasiva correcta. Puedes comprobar las respuestas de forma individual o validar la pestaña completa.</p>
+        </div>
+
+        <!-- Pestañas para dividir las 45 preguntas (15 por cada pestaña) -->
+        <div class="flex border-b border-gray-200 overflow-x-auto no-scrollbar">
+          <button onclick="switchGapTab('present')" id="tab-btn-present" class="flex-1 min-w-[120px] py-2.5 text-xs font-bold text-brand-600 border-b-2 border-brand-500 transition-all focus:outline-none">
+            Presente (1-15)
+          </button>
+          <button onclick="switchGapTab('past')" id="tab-btn-past" class="flex-1 min-w-[120px] py-2.5 text-xs font-semibold text-gray-400 border-b-2 border-transparent hover:text-gray-600 transition-all focus:outline-none">
+            Pasado (16-30)
+          </button>
+          <button onclick="switchGapTab('future')" id="tab-btn-future" class="flex-1 min-w-[120px] py-2.5 text-xs font-semibold text-gray-400 border-b-2 border-transparent hover:text-gray-600 transition-all focus:outline-none">
+            Futuros y Otros (31-45)
+          </button>
+        </div>
+
+        <!-- Contenedores de las Preguntas (Renderizado dinámico de 15 a la vez) -->
+        <div id="gap-questions-container" class="space-y-6 max-h-[600px] overflow-y-auto pr-2 no-scrollbar">
+          <!-- Se inyectarán dinámicamente mediante JS -->
+        </div>
+
+        <!-- Acciones del Ejercicio 4 -->
+        <div class="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
+          <button onclick="checkActiveTabGaps()" class="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm py-3 rounded-xl shadow-md shadow-brand-500/10 hover:shadow-brand-500/20 transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>Validar Bloque Completo (15 Frases)</span>
+          </button>
+        </div>
+        <p id="gap-overall-feedback" class="text-xs font-bold text-center mt-2 hidden"></p>
+      </div>
+
+      <!-- Ejercicio 1: Ordenador de Frases (Soporte táctil) -->
+      <div class="bg-white rounded-3xl p-6 border border-gray-200/80 shadow-sm space-y-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <span class="bg-brand-500/10 text-brand-600 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">Ejercicio 1</span>
+            <h3 class="text-lg font-bold text-gray-900 mt-1.5">Reconstruye la frase pasiva</h3>
+          </div>
+          <span class="text-xs font-extrabold text-brand-600 bg-brand-50 px-3 py-1 rounded-full" id="builder-progress-badge">
+            Frase <span id="builder-current-step">1</span> de 5
+          </span>
+        </div>
+        <p class="text-xs text-gray-500">Toca las palabras en orden para estructurar la frase de forma correcta de manera táctil e intuitiva.</p>
+
+        <div class="bg-gray-50 p-3 rounded-2xl border border-gray-100 flex items-center justify-between">
+          <div>
+            <span class="text-[10px] uppercase font-bold text-gray-400 block">Oración Activa</span>
+            <p id="active-sentence-source" class="text-sm font-semibold text-gray-800">"He wrote the letter."</p>
+          </div>
+          <button id="btn-builder-speak" class="text-gray-400 hover:text-brand-500"><i class="fa-solid fa-volume-high"></i></button>
+        </div>
+
+        <div class="space-y-2">
+          <span class="text-[10px] uppercase font-bold text-gray-400 block">Tu frase construida:</span>
+          <div id="assembly-zone" class="min-h-[50px] bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl p-3 flex flex-wrap gap-2 items-center">
+            <p id="assembly-placeholder" class="text-xs text-gray-400 mx-auto pointer-events-none">Toca abajo sobre las palabras para empezar...</p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <span class="text-[10px] uppercase font-bold text-brand-500 block">Banco de palabras:</span>
+          <div id="word-bank" class="flex flex-wrap gap-2 p-2 bg-gray-100/50 rounded-2xl border border-gray-100"></div>
+        </div>
+
+        <div class="pt-2 flex gap-3">
+          <button onclick="checkSentenceBuilder()" class="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm py-2.5 rounded-xl shadow-md transition-all">
+            Comprobar Respuesta
+          </button>
+          <button onclick="resetSentenceBuilder()" class="bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 rounded-xl transition-all" title="Limpiar frase">
+            <i class="fa-solid fa-eraser"></i>
+          </button>
+        </div>
+        <p id="builder-feedback" class="text-xs font-semibold text-center mt-2 hidden"></p>
+      </div>
+
+    </section>
+  </main>
+
+
+  <!-- SECCIÓN 2: DICCIONARIO DE PARTICIPIOS (A-Z) -->
+  <main id="tab-content-verbs" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <div class="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200/80 shadow-sm space-y-6">
+      
+      <!-- Cabecera del Diccionario -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-gray-100 pb-5">
+        <div>
+          <span class="bg-brand-500/10 text-brand-600 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">Recurso de Apoyo</span>
+          <h2 class="text-2xl font-extrabold text-gray-900 mt-1.5 flex items-center gap-2">
+            <i class="fa-solid fa-book-open text-brand-500"></i> Diccionario de Verbos en Participio
+          </h2>
+          <p class="text-xs text-gray-500 mt-1">Hemos recopilado todos los verbos incluidos en los 45 ejercicios interactivos. Filtra de la A a la Z para estudiar e integrar su pronunciación.</p>
+        </div>
+        
+        <!-- Acciones: Buscador e Impresión/Guardar -->
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+              <i class="fa-solid fa-magnifying-glass text-xs"></i>
+            </span>
+            <input type="text" id="verb-search-input" oninput="filterVerbList()" placeholder="Buscar verbo..." class="w-full sm:w-60 pl-8 pr-4 py-2 text-xs bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-500 focus:bg-white transition-all">
+          </div>
+          
+          <button onclick="exportVerbsToCSV()" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-sm shadow-brand-500/10 hover:shadow-brand-500/25 transition-all flex items-center gap-1.5">
+            <i class="fa-solid fa-file-excel"></i>
+            <span>Guardar Tabla (Excel)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filtro Alfabético Interactivo (A-Z) -->
+      <div class="space-y-2">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 block">Filtrar por Letra Inicial:</span>
+        <div id="alphabet-filters" class="flex flex-wrap gap-1.5 pb-2 border-b border-gray-100">
+          <!-- Botones inyectados dinámicamente -->
+        </div>
+      </div>
+
+      <!-- Tabla Responsiva de Verbos -->
+      <div class="overflow-x-auto rounded-2xl border border-gray-150 no-scrollbar">
+        <table class="min-w-full divide-y divide-gray-200 text-sm">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Verbo en Infinitivo</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Tipo</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Participio Pasado</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Significado (Español)</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Ejemplo en Voz Pasiva</th>
+            </tr>
+          </thead>
+          <tbody id="verb-dictionary-body" class="bg-white divide-y divide-gray-100">
+            <!-- Filas inyectadas mediante JavaScript de manera segura -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Indicador de Resultados Vacíos -->
+      <div id="no-verbs-message" class="hidden text-center py-12 text-gray-400 space-y-2">
+        <i class="fa-solid fa-face-frown text-3xl"></i>
+        <p class="text-sm font-semibold">No se encontraron verbos con ese criterio de búsqueda.</p>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // BASE DE DATOS DE LOS 45 EJERCICIOS (5 por cada una de las 9 estructuras gramaticales)
+    const gapExercises = [
+      // ================== PESTAÑA: PRESENTE (1 - 15) ==================
+      // Present Simple Pasivo (1-5)
+      { id: 1, category: "present", text: "Every day, thousands of emails <strong class='text-gray-900'>(send)</strong> to our customer support.", baseVerb: "send", correct: "are sent", hint: "Present Simple Pasivo", speakSentence: "Every day, thousands of emails are sent to our customer support.", customTip: "Recuerda que 'send' es un verbo irregular. Su participio termina en 't' (sent)." },
+      { id: 2, category: "present", text: "This traditional festival <strong class='text-gray-900'>(celebrate)</strong> in May every year.", baseVerb: "celebrate", correct: "is celebrated", hint: "Present Simple Pasivo", speakSentence: "This traditional festival is celebrated in May every year." },
+      { id: 3, category: "present", text: "Coffee <strong class='text-gray-900'>(grow)</strong> in many tropical countries like Colombia and Brazil.", baseVerb: "grow", correct: "is grown", hint: "Present Simple Pasivo", speakSentence: "Coffee is grown in many tropical countries like Colombia and Brazil.", customTip: "El participio de 'grow' es 'grown'." },
+      { id: 4, category: "present", text: "Spanish and English <strong class='text-gray-900'>(speak)</strong> by millions of people around the globe.", baseVerb: "speak", correct: "are spoken", hint: "Present Simple Pasivo", speakSentence: "Spanish and English are spoken by millions of people around the globe.", customTip: "El participio de 'speak' es 'spoken'." },
+      { id: 5, category: "present", text: "Active and passive voices <strong class='text-gray-900'>(study)</strong> by students to improve their writing.", baseVerb: "study", correct: "are studied", hint: "Present Simple Pasivo", speakSentence: "Active and passive voices are studied by students to improve their writing." },
+
+      // Present Continuous Pasivo (6-10)
+      { id: 6, category: "present", text: "At this moment, many young graduates <strong class='text-gray-900'>(employ)</strong> for their skills.", baseVerb: "employ", correct: "are being employed", hint: "Present Continuous Pasivo", speakSentence: "At this moment, many young graduates are being employed for their skills." },
+      { id: 7, category: "present", text: "Listen! A new song <strong class='text-gray-900'>(record)</strong> in the studio right now.", baseVerb: "record", correct: "is being recorded", hint: "Present Continuous Pasivo", speakSentence: "Listen! A new song is being recorded in the studio right now." },
+      { id: 8, category: "present", text: "The old bridge <strong class='text-gray-900'>(repair)</strong> today, so traffic is terrible.", baseVerb: "repair", correct: "is being repaired", hint: "Present Continuous Pasivo", speakSentence: "The old bridge is being repaired today, so traffic is terrible." },
+      { id: 9, category: "present", text: "Right now, some important decisions <strong class='text-gray-900'>(make)</strong> by the directors.", baseVerb: "make", correct: "are being made", hint: "Present Continuous Pasivo", speakSentence: "Right now, some important decisions are being made by the directors.", customTip: "El participio de 'make' es 'made'." },
+      { id: 10, category: "present", text: "Look! The classrooms <strong class='text-gray-900'>(paint)</strong> by the maintenance team at the moment.", baseVerb: "paint", correct: "are being painted", hint: "Present Continuous Pasivo", speakSentence: "Look! The classrooms are being painted by the maintenance team at the moment." },
+
+      // Present Perfect Pasivo (11-15)
+      { id: 11, category: "present", text: "Since 2020, many trees <strong class='text-gray-900'>(plant)</strong> in this public park.", baseVerb: "plant", correct: "have been planted", hint: "Present Perfect Pasivo", speakSentence: "Since 2020, many trees have been planted in this public park." },
+      { id: 12, category: "present", text: "The classroom <strong class='text-gray-900'>(clean)</strong> recently by the students.", baseVerb: "clean", correct: "has been cleaned", hint: "Present Perfect Pasivo", speakSentence: "The classroom has been cleaned recently by the students." },
+      { id: 13, category: "present", text: "Many active cases of this disease <strong class='text-gray-900'>(cure)</strong> since the antibiotic was developed.", baseVerb: "cure", correct: "have been cured", hint: "Present Perfect Pasivo", speakSentence: "Many active cases of this disease have been cured since the antibiotic was developed." },
+      { id: 14, category: "present", text: "The project <strong class='text-gray-900'>(finish)</strong> recently by our team, so we can relax.", baseVerb: "finish", correct: "has been finished", hint: "Present Perfect Pasivo", speakSentence: "The project has been finished recently by our team, so we can relax." },
+      { id: 15, category: "present", text: "A lot of progress <strong class='text-gray-900'>(make)</strong> in science since Gara's report was published.", baseVerb: "make", correct: "has been made", hint: "Present Perfect Pasivo", speakSentence: "A lot of progress has been made in science since Gara's report was published.", customTip: "El participio de 'make' es 'made'." },
+
+
+      // ================== PESTAÑA: PASADO (16 - 30) ==================
+      // Past Simple Pasivo (16-20)
+      { id: 16, category: "past", text: "Yesterday, the rules <strong class='text-gray-900'>(change)</strong> because of Gara's report.", baseVerb: "change", correct: "were changed", hint: "Past Simple Pasivo", speakSentence: "Yesterday, the rules were changed because of Gara's report." },
+      { id: 17, category: "past", text: "The famous portrait <strong class='text-gray-900'>(paint)</strong> by Da Vinci in the 16th century.", baseVerb: "paint", correct: "was painted", hint: "Past Simple Pasivo", speakSentence: "The famous portrait was painted by Da Vinci in the 16th century." },
+      { id: 18, category: "past", text: "My favorite childhood bicycle <strong class='text-gray-900'>(steal)</strong> ten years ago.", baseVerb: "steal", correct: "was stolen", hint: "Past Simple Pasivo", speakSentence: "My favorite childhood bicycle was stolen ten years ago.", customTip: "El participio irregular de 'steal' es 'stolen'." },
+      { id: 19, category: "past", text: "Two young men <strong class='text-gray-900'>(arrest)</strong> last night on suspicion of fraud.", baseVerb: "arrest", correct: "were arrested", hint: "Past Simple Pasivo", speakSentence: "Two young men were arrested last night on suspicion of fraud." },
+      { id: 20, category: "past", text: "The first mobile phones <strong class='text-gray-900'>(introduce)</strong> to the public in the late 20th century.", baseVerb: "introduce", correct: "were introduced", hint: "Past Simple Pasivo", speakSentence: "The first mobile phones were introduced to the public in the late 20th century." },
+
+      // Past Continuous Pasivo (21-25)
+      { id: 21, category: "past", text: "When I arrived, the broken windows <strong class='text-gray-900'>(repair)</strong> by the workers.", baseVerb: "repair", correct: "were being repaired", hint: "Past Continuous Pasivo", speakSentence: "When I arrived, the broken windows were being repaired by the workers." },
+      { id: 22, category: "past", text: "While the meeting was going on, the presentation <strong class='text-gray-900'>(update)</strong> by Sarah.", baseVerb: "update", correct: "was being updated", hint: "Past Continuous Pasivo", speakSentence: "While the meeting was going on, the presentation was being updated by Sarah." },
+      { id: 23, category: "past", text: "At 9 PM yesterday, dinner <strong class='text-gray-900'>(prepare)</strong> by our parents.", baseVerb: "prepare", correct: "was being prepared", hint: "Past Continuous Pasivo", speakSentence: "At 9 PM yesterday, dinner was being prepared by our parents." },
+      { id: 24, category: "past", text: "The ancient ruins <strong class='text-gray-900'>(excavate)</strong> when the sudden storm started.", baseVerb: "excavate", correct: "were being excavated", hint: "Past Continuous Pasivo", speakSentence: "The ancient ruins were being excavated when the sudden storm started." },
+      { id: 25, category: "past", text: "I felt like I <strong class='text-gray-900'>(watch)</strong> while I was walking home in the dark.", baseVerb: "watch", correct: "was being watched", hint: "Past Continuous Pasivo", speakSentence: "I felt like I was being watched while I was walking home in the dark." },
+
+      // Past Perfect Pasivo (26-30)
+      { id: 26, category: "past", text: "Before the storm hit, all the boats <strong class='text-gray-900'>(secure)</strong> at the harbor.", baseVerb: "secure", correct: "had been secured", hint: "Past Perfect Pasivo", speakSentence: "Before the storm hit, all the boats had been secured at the harbor." },
+      { id: 27, category: "past", text: "By the time we got there, the delicious cake <strong class='text-gray-900'>(already eat)</strong>.", baseVerb: "eat", correct: "had been eaten", hint: "Past Perfect Pasivo", speakSentence: "By the time we got there, the delicious cake had been eaten.", customTip: "El participio irregular de 'eat' es 'eaten'." },
+      { id: 28, category: "past", text: "The keys <strong class='text-gray-900'>(lose)</strong> before she even left the office.", baseVerb: "lose", correct: "had been lost", hint: "Past Perfect Pasivo", speakSentence: "The keys had been lost before she even left the office.", customTip: "El participio irregular de 'lose' es 'lost'." },
+      { id: 29, category: "past", text: "The house <strong class='text-gray-900'>(sell)</strong> before the new buyers could make an offer.", baseVerb: "sell", correct: "had been sold", hint: "Past Perfect Pasivo", speakSentence: "The house had been sold before the new buyers could make an offer.", customTip: "El participio irregular de 'sell' es 'sold'." },
+      { id: 30, category: "past", text: "He was relieved because his stolen car <strong class='text-gray-900'>(find)</strong> by the police.", baseVerb: "find", correct: "had been found", hint: "Past Perfect Pasivo", speakSentence: "He was relieved because his stolen car had been found by the police.", customTip: "El participio de 'find' es 'found'." },
+
+
+      // ================== PESTAÑA: FUTUROS Y OTROS (31 - 45) ==================
+      // Future Simple Pasivo (31-35)
+      { id: 31, category: "future", text: "The results of the English exam <strong class='text-gray-900'>(publish)</strong> next Monday.", baseVerb: "publish", correct: "will be published", hint: "Future Simple Pasivo", speakSentence: "The results of the English exam will be published next Monday." },
+      { id: 32, category: "future", text: "I'm sure that your lost passport <strong class='text-gray-900'>(find)</strong> soon.", baseVerb: "find", correct: "will be found", hint: "Future Simple Pasivo", speakSentence: "I'm sure that your lost passport will be found soon.", customTip: "El participio de 'find' es 'found'." },
+      { id: 33, category: "future", text: "The new highway <strong class='text-gray-900'>(open)</strong> by the president next year.", baseVerb: "open", correct: "will be opened", hint: "Future Simple Pasivo", speakSentence: "The new highway will be opened by the president next year." },
+      { id: 34, category: "future", text: "All the broken computers <strong class='text-gray-900'>(replace)</strong> during the summer holidays.", baseVerb: "replace", correct: "will be replaced", hint: "Future Simple Pasivo", speakSentence: "All the broken computers will be replaced during the summer holidays." },
+      { id: 35, category: "future", text: "I promise that your email <strong class='text-gray-900'>(answer)</strong> by tomorrow morning.", baseVerb: "answer", correct: "will be answered", hint: "Future Simple Pasivo", speakSentence: "I promise that your email will be answered by tomorrow morning." },
+
+      // 'Going to' Pasivo (36-40)
+      { id: 36, category: "future", text: "Be careful! That old building <strong class='text-gray-900'>(demolish)</strong> tomorrow.", baseVerb: "demolish", correct: "is going to be demolished", hint: "'Going to' Pasivo", speakSentence: "Be careful! That old building is going to be demolished tomorrow." },
+      { id: 37, category: "future", text: "A new sports center <strong class='text-gray-900'>(build)</strong> in our neighborhood soon.", baseVerb: "build", correct: "is going to be built", hint: "'Going to' Pasivo", speakSentence: "A new sports center is going to be built in our neighborhood soon.", customTip: "El participio de 'build' es 'built' (con T final)." },
+      { id: 38, category: "future", text: "The clean-up activities <strong class='text-gray-900'>(organize)</strong> by the community next Saturday.", baseVerb: "organize", correct: "are going to be organized", hint: "'Going to' Pasivo", speakSentence: "The clean-up activities are going to be organized by the community next Saturday." },
+      { id: 39, category: "future", text: "I think those old documents <strong class='text-gray-900'>(destroy)</strong> by the administration soon.", baseVerb: "destroy", correct: "are going to be destroyed", hint: "'Going to' Pasivo", speakSentence: "I think those old documents are going to be destroyed by the administration soon." },
+      { id: 40, category: "future", text: "This historical museum <strong class='text-gray-900'>(visit)</strong> by thousands of tourists this weekend.", baseVerb: "visit", correct: "is going to be visited", hint: "'Going to' Pasivo", speakSentence: "This historical museum is going to be visited by thousands of tourists this weekend." },
+
+      // Infinitivo Pasivo (41-45)
+      { id: 41, category: "future", text: "This difficult homework needs <strong class='text-gray-900'>(do)</strong> before dinner.", baseVerb: "do", correct: "to be done", hint: "Infinitivo Pasivo", speakSentence: "This difficult homework needs to be done before dinner.", customTip: "El participio de 'do' es 'done'." },
+      { id: 42, category: "future", text: "She wants <strong class='text-gray-900'>(treat)</strong> with respect by everyone.", baseVerb: "treat", correct: "to be treated", hint: "Infinitivo Pasivo", speakSentence: "She wants to be treated with respect by everyone." },
+      { id: 43, category: "future", text: "This sensitive information deserves <strong class='text-gray-900'>(keep)</strong> secret.", baseVerb: "keep", correct: "to be kept", hint: "Infinitivo Pasivo", speakSentence: "This sensitive information deserves to be kept secret.", customTip: "El participio de 'keep' es 'kept'." },
+      { id: 44, category: "future", text: "The employees hope <strong class='text-gray-900'>(promote)</strong> after their hard work this year.", baseVerb: "promote", correct: "to be promoted", hint: "Infinitivo Pasivo", speakSentence: "The employees hope to be promoted after their hard work this year." },
+      { id: 45, category: "future", text: "He didn't expect <strong class='text-gray-900'>(choose)</strong> for the principal role in the play.", baseVerb: "choose", correct: "to be chosen", hint: "Infinitivo Pasivo", speakSentence: "He didn't expect to be chosen for the principal role in the play.", customTip: "El participio irregular de 'choose' es 'chosen' (con una sola 'o')." }
+    ];
+
+    // BASE DE DATOS DE VERBOS PRE-ORDENADOS DE LA A a la Z (Evita bloqueos de CPU y bugs de re-ordenamiento)
+    const verbsDatabase = [
+      { infinitive: "Answer", participle: "Answered", translation: "Responder", type: "Regular", passiveExample: "The email was answered." },
+      { infinitive: "Arrest", participle: "Arrested", translation: "Arrestar", type: "Regular", passiveExample: "The thief was arrested." },
+      { infinitive: "Build", participle: "Built", translation: "Construir", type: "Irregular", passiveExample: "The house was built." },
+      { infinitive: "Celebrate", participle: "Celebrated", translation: "Celebrar", type: "Regular", passiveExample: "The festival is celebrated." },
+      { infinitive: "Change", participle: "Changed", translation: "Cambiar", type: "Regular", passiveExample: "The rules were changed." },
+      { infinitive: "Choose", participle: "Chosen", translation: "Elegir", type: "Irregular", passiveExample: "He was chosen." },
+      { infinitive: "Clean", participle: "Cleaned", translation: "Limpiar", type: "Regular", passiveExample: "The room was cleaned." },
+      { infinitive: "Cook", participle: "Cooked", translation: "Cocinar", type: "Regular", passiveExample: "The dinner is cooked." },
+      { infinitive: "Cure", participle: "Cured", translation: "Curar", type: "Regular", passiveExample: "The disease was cured." },
+      { infinitive: "Demolish", participle: "Demolished", translation: "Demoler", type: "Regular", passiveExample: "The building was demolished." },
+      { infinitive: "Destroy", participle: "Destroyed", translation: "Destruir", type: "Regular", passiveExample: "The papers were destroyed." },
+      { infinitive: "Do", participle: "Done", translation: "Hacer", type: "Irregular", passiveExample: "The homework is done." },
+      { infinitive: "Eat", participle: "Eaten", translation: "Comer", type: "Irregular", passiveExample: "The cake was eaten." },
+      { infinitive: "Employ", participle: "Employed", translation: "Emplear", type: "Regular", passiveExample: "Graduates are employed." },
+      { infinitive: "Excavate", participle: "Excavated", translation: "Excavar", type: "Regular", passiveExample: "The ruins were excavated." },
+      { infinitive: "Expect", participle: "Expected", translation: "Esperar (anticipar)", type: "Regular", passiveExample: "It was expected." },
+      { infinitive: "Find", participle: "Found", translation: "Encontrar", type: "Irregular", passiveExample: "The car was found." },
+      { infinitive: "Finish", participle: "Finished", translation: "Terminar", type: "Regular", passiveExample: "The report is finished." },
+      { infinitive: "Give", participle: "Given", translation: "Dar", type: "Irregular", passiveExample: "They were given antibiotics." },
+      { infinitive: "Grow", participle: "Grown", translation: "Cultivar / Crecer", type: "Irregular", passiveExample: "Coffee is grown." },
+      { infinitive: "Introduce", participle: "Introduced", translation: "Introducir", type: "Regular", passiveExample: "The phone was introduced." },
+      { infinitive: "Keep", participle: "Kept", translation: "Guardar / Mantener", type: "Irregular", passiveExample: "The secret was kept." },
+      { infinitive: "Lose", participle: "Lost", translation: "Perder", type: "Irregular", passiveExample: "The keys were lost." },
+      { infinitive: "Make", participle: "Made", translation: "Hacer", type: "Irregular", passiveExample: "A cake is made." },
+      { infinitive: "Open", participle: "Opened", translation: "Abrir", type: "Regular", passiveExample: "The gate was opened." },
+      { infinitive: "Organize", participle: "Organized", translation: "Organizar", type: "Regular", passiveExample: "The event was organized." },
+      { infinitive: "Paint", participle: "Painted", translation: "Pintar", type: "Regular", passiveExample: "The room was painted." },
+      { infinitive: "Plant", participle: "Planted", translation: "Plantar", type: "Regular", passiveExample: "Trees were planted." },
+      { infinitive: "Promote", participle: "Promoted", translation: "Ascender", type: "Regular", passiveExample: "She was promoted." },
+      { infinitive: "Publish", participle: "Published", translation: "Publicar", type: "Regular", passiveExample: "The book is published." },
+      { infinitive: "Record", participle: "Recorded", translation: "Grabar", type: "Regular", passiveExample: "The song is being recorded." },
+      { infinitive: "Repair", participle: "Repaired", translation: "Reparar", type: "Regular", passiveExample: "The car was repaired." },
+      { infinitive: "Replace", participle: "Replaced", translation: "Reemplazar", type: "Regular", passiveExample: "The screen was replaced." },
+      { infinitive: "Secure", participle: "Secured", translation: "Asegurar", type: "Regular", passiveExample: "The boats were secured." },
+      { infinitive: "Sell", participle: "Sold", translation: "Vender", type: "Irregular", passiveExample: "The house was sold." },
+      { infinitive: "Send", participle: "Sent", translation: "Enviar", type: "Irregular", passiveExample: "An email is sent." },
+      { infinitive: "Speak", participle: "Spoken", translation: "Hablar", type: "Irregular", passiveExample: "English is spoken here." },
+      { infinitive: "Steal", participle: "Stolen", translation: "Robar", type: "Irregular", passiveExample: "The bike was stolen." },
+      { infinitive: "Study", participle: "Studied", translation: "Estudiar", type: "Regular", passiveExample: "Grammar is studied." },
+      { infinitive: "Take", participle: "Taken", translation: "Tomar", type: "Irregular", passiveExample: "Photos were taken." },
+      { infinitive: "Treat", participle: "Treated", translation: "Tratar", type: "Regular", passiveExample: "Patients are treated." },
+      { infinitive: "Update", participle: "Updated", translation: "Actualizar", type: "Regular", passiveExample: "The software was updated." },
+      { infinitive: "Use", participle: "Used", translation: "Usar / Utilizar", type: "Regular", passiveExample: "Antibiotics are used." },
+      { infinitive: "Visit", participle: "Visited", translation: "Visitar", type: "Regular", passiveExample: "The museum is visited." },
+      { infinitive: "Want", participle: "Wanted", translation: "Querer", type: "Regular", passiveExample: "It is wanted." },
+      { infinitive: "Watch", participle: "Watched", translation: "Observar", type: "Regular", passiveExample: "The movie was watched." },
+      { infinitive: "Write", participle: "Written", translation: "Escribir", type: "Irregular", passiveExample: "The letter was written." }
+    ];
+
+    let currentMainTab = "dashboard";
+    let currentTab = "present"; 
+    let activeLetterFilter = "ALL"; 
+    let score = 0;
+
+    // CONTROL DE PESTAÑAS PRINCIPALES (Laboratorio vs Diccionario de Verbos)
+    function switchMainTab(tabId) {
+      currentMainTab = tabId;
+      
+      const dashboardTab = document.getElementById('tab-content-dashboard');
+      const verbsTab = document.getElementById('tab-content-verbs');
+      
+      const dashboardBtn = document.getElementById('main-tab-dashboard');
+      const verbsBtn = document.getElementById('main-tab-verbs');
+
+      if (tabId === 'dashboard') {
+        dashboardTab.classList.remove('hidden');
+        verbsTab.classList.add('hidden');
+        dashboardBtn.className = "py-4 px-2 border-b-2 border-brand-500 font-bold text-sm text-brand-600 flex items-center gap-2 transition-all";
+        verbsBtn.className = "py-4 px-2 border-b-2 border-transparent font-semibold text-sm text-gray-500 hover:text-gray-700 flex items-center gap-2 transition-all";
+      } else {
+        dashboardTab.classList.add('hidden');
+        verbsTab.classList.remove('hidden');
+        dashboardBtn.className = "py-4 px-2 border-b-2 border-transparent font-semibold text-sm text-gray-500 hover:text-gray-700 flex items-center gap-2 transition-all";
+        verbsBtn.className = "py-4 px-2 border-b-2 border-brand-500 font-bold text-sm text-brand-600 flex items-center gap-2 transition-all";
+        
+        // Cargar Diccionario de Verbos
+        renderAlphabetFilters();
+        renderVerbTable();
+      }
+      stopAllSpeech();
+    }
+
+    // CONTROL DE PESTAÑAS DEL EJERCICIO 4
+    function switchGapTab(tabName) {
+      currentTab = tabName;
+      
+      const tabs = ["present", "past", "future"];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (t === tabName) {
+          btn.className = "flex-1 min-w-[120px] py-2.5 text-xs font-bold text-brand-600 border-b-2 border-brand-500 transition-all focus:outline-none";
+        } else {
+          btn.className = "flex-1 min-w-[120px] py-2.5 text-xs font-semibold text-gray-400 border-b-2 border-transparent hover:text-gray-600 transition-all focus:outline-none";
+        }
+      });
+
+      renderGapExercises();
+      document.getElementById('gap-overall-feedback').classList.add('hidden');
+    }
+
+    // MOTOR DE DIAGNÓSTICO DE ERRORES EN HUECOS (MÉTODO SIN SOLUCIÓN DIRECTA)
+    function diagnoseResponse(userVal, correctVal, baseVerb, customTip) {
+      userVal = userVal.trim().toLowerCase().replace(/\s+/g, ' ');
+      correctVal = correctVal.trim().toLowerCase().replace(/\s+/g, ' ');
+      
+      if (!userVal) {
+        return "El cuadro de texto está vacío. ¡Escribe tu propuesta!";
+      }
+      if (userVal === correctVal) {
+        return "¡Excelente! Respuesta perfecta.";
+      }
+      
+      const userWords = userVal.split(' ');
+      const correctWords = correctVal.split(' ');
+      const base = baseVerb.toLowerCase();
+
+      if (userWords.includes(base)) {
+        return `<strong>¡Pista de participio!</strong> Has colocado el verbo en infinitivo (<em>'${base}'</em>). En la voz pasiva, el verbo principal siempre debe ir en <strong>participio pasado</strong> (terminado en <em>-ed</em> o de la 3ª columna).`;
+      }
+
+      const auxiliaries = ['am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'to'];
+      const userHasAux = userWords.some(w => auxiliaries.includes(w));
+      const correctHasAux = correctWords.some(w => auxiliaries.includes(w));
+      
+      if (correctHasAux && !userHasAux) {
+        return `<strong>¡Falta el auxiliar!</strong> Te falta el verbo auxiliar (formas de <em>'be'</em>). Recuerda: la voz pasiva siempre requiere el auxiliar en el tiempo correcto.`;
+      }
+
+      if (correctWords.includes('are') && userWords.includes('is')) {
+        return "<strong>¡Concordancia!</strong> El sujeto de esta oración es plural. Elige <em>'are'</em> en lugar de <em>'is'</em>.";
+      }
+      if (correctWords.includes('is') && userWords.includes('are')) {
+        return "<strong>¡Concordancia!</strong> El sujeto es singular. Cambia <em>'are'</em> por <em>'is'</em>.";
+      }
+      if (correctWords.includes('were') && userWords.includes('was')) {
+        return "<strong>¡Concordancia en pasado!</strong> El sujeto es plural. En pasado, usa <em>'were'</em> en lugar de <em>'was'</em>.";
+      }
+      if (correctWords.includes('was') && userWords.includes('were')) {
+        return "<strong>¡Concordancia en pasado!</strong> El sujeto es singular. Usa <em>'was'</em> en lugar de <em>'were'</em>.";
+      }
+      if (correctWords.includes('have') && userWords.includes('has')) {
+        return "<strong>¡Concordancia en tiempos perfectos!</strong> El sujeto es plural. Usa el auxiliar <em>'have'</em> en vez de <em>'has'</em>.";
+      }
+      if (correctWords.includes('has') && userWords.includes('have')) {
+        return "<strong>¡Concordancia en tiempos perfectos!</strong> El sujeto es singular. Usa el auxiliar <em>'has'</em> en vez de <em>'have'</em>.";
+      }
+
+      if (correctWords.includes('being') && !userWords.includes('being')) {
+        return "<strong>¡Falta el aspecto continuo!</strong> Esta acción es continua (en progreso). Debes agregar <em>'being'</em> entre el verbo be y el participio pasado.";
+      }
+      if (correctWords.includes('been') && !userWords.includes('been')) {
+        return "<strong>¡Puente ausente!</strong> En los tiempos perfectos pasivos, necesitas añadir la palabra <em>'been'</em> antes de tu participio principal.";
+      }
+      if (correctWords.includes('be') && !userWords.includes('be') && !correctWords.includes('been') && !correctWords.includes('being')) {
+        return "<strong>¡Forma base ausente!</strong> Después de 'will' o 'going to', necesitas colocar el auxiliar en infinitivo sin 'to': <em>'be'</em>.";
+      }
+      if (correctWords.includes('to') && !userWords.includes('to')) {
+        return "<strong>¡Preposición ausente!</strong> Recuerda que esta estructura de infinitivo requiere la partícula <em>'to'</em> antes del auxiliar.";
+      }
+
+      const nonAuxCorrect = correctWords.filter(w => !auxiliaries.includes(w));
+      const nonAuxUser = userWords.filter(w => !auxiliaries.includes(w));
+
+      if (nonAuxCorrect.length > 0 && nonAuxUser.length > 0) {
+        const corrPart = nonAuxCorrect[nonAuxCorrect.length - 1];
+        const userPart = nonAuxUser[nonAuxUser.length - 1];
+        if (corrPart !== userPart) {
+          if (customTip) {
+            return `<strong>¡Pista de participio!</strong> El auxiliar está perfecto, pero revisa la ortografía de tu participio de '${base}'. ${customTip}`;
+          }
+          return `<strong>¡Pista de participio!</strong> Tu estructura auxiliar es correcta, pero el participio de <em>'${base}'</em> no está bien deletreado. Revisa si es regular o irregular.`;
+        }
+      }
+
+      return "<strong>¡Sigue intentándolo!</strong> Comprueba el orden de los auxiliares en 'El Chivato' o en la tabla de fórmulas.";
+    }
+
+    // RENDERIZADOR PROGRAMÁTICO INTEGRAL (Evita de raíz el conflicto con comillas de audio)
+    function renderGapExercises() {
+      const container = document.getElementById('gap-questions-container');
+      container.innerHTML = "";
+
+      const filtered = gapExercises.filter(ex => ex.category === currentTab);
+
+      filtered.forEach(ex => {
+        const div = document.createElement('div');
+        div.className = "p-4 bg-white border border-gray-200 rounded-2xl space-y-3 transition-all hover:shadow-sm";
+        
+        // Bloque superior de la oración
+        const headerDiv = document.createElement('div');
+        headerDiv.className = "flex items-start justify-between gap-2";
+        
+        const p = document.createElement('p');
+        p.className = "text-gray-700 font-medium leading-relaxed";
+        p.innerHTML = `<span class="text-xs text-brand-500 font-bold mr-1.5">${ex.id}.</span> ${ex.text}`;
+        
+        const speakBtn = document.createElement('button');
+        speakBtn.className = "text-gray-400 hover:text-brand-500 p-1 flex-shrink-0 transition-colors";
+        speakBtn.title = "Escuchar frase";
+        speakBtn.innerHTML = `<i class="fa-solid fa-volume-high text-sm"></i>`;
+        
+        // El event listener soluciona el bug de las comillas simples
+        speakBtn.addEventListener('click', () => {
+          speakText(ex.speakSentence, 'en');
+        });
+        
+        headerDiv.appendChild(p);
+        headerDiv.appendChild(speakBtn);
+        div.appendChild(headerDiv);
+        
+        // Fila de Entrada de Datos
+        const inputGroup = document.createElement('div');
+        inputGroup.className = "flex gap-2 flex-col sm:flex-row items-stretch";
+        
+        const input = document.createElement('input');
+        input.type = "text";
+        input.id = `gap-input-${ex.id}`;
+        input.placeholder = "Escribe Be + participio aquí...";
+        input.className = "flex-1 bg-gray-50 border border-gray-200 px-3.5 py-2.5 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500 focus:bg-white transition-all";
+        input.addEventListener('input', () => clearGapStatus(ex.id));
+        
+        const reviewBtn = document.createElement('button');
+        reviewBtn.className = "bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2.5 rounded-xl text-xs transition-all flex items-center justify-center gap-1.5 flex-shrink-0";
+        reviewBtn.innerHTML = `<i class="fa-solid fa-clipboard-check"></i> <span>Revisar</span>`;
+        reviewBtn.addEventListener('click', () => checkSingleGap(ex.id));
+        
+        inputGroup.appendChild(input);
+        inputGroup.appendChild(reviewBtn);
+        div.appendChild(inputGroup);
+        
+        // Fila de Metadatos y Feedback rápido
+        const footerDiv = document.createElement('div');
+        footerDiv.className = "flex items-center justify-between text-[10px] text-gray-400 font-bold px-1";
+        
+        const metaSpan = document.createElement('span');
+        metaSpan.innerHTML = `<i class="fa-solid fa-bookmark text-brand-500/80 mr-1"></i> ${ex.hint}`;
+        
+        const statusBadge = document.createElement('span');
+        statusBadge.id = `gap-status-badge-${ex.id}`;
+        statusBadge.className = "hidden";
+        
+        footerDiv.appendChild(metaSpan);
+        footerDiv.appendChild(statusBadge);
+        div.appendChild(footerDiv);
+        
+        // Caja de Diagnóstico de Errores
+        const hintContainer = document.createElement('div');
+        hintContainer.id = `gap-hint-container-${ex.id}`;
+        hintContainer.className = "hidden p-3 rounded-xl border bg-orange-50/75 border-orange-200/60 text-xs text-orange-700 font-medium flex items-start gap-2.5 transition-all";
+        
+        const questionIcon = document.createElement('i');
+        questionIcon.className = "fa-solid fa-circle-question mt-0.5 text-brand-500 text-sm";
+        
+        const hintText = document.createElement('span');
+        hintText.id = `gap-hint-text-${ex.id}`;
+        hintText.innerHTML = "Pauta de ayuda...";
+        
+        hintContainer.appendChild(questionIcon);
+        hintContainer.appendChild(hintText);
+        div.appendChild(hintContainer);
+        
+        container.appendChild(div);
+      });
+    }
+
+    // LIMPIAR LOS ESTADOS ROJOS/VERDES CUANDO EL ALUMNO ESCRIBE
+    function clearGapStatus(id) {
+      const input = document.getElementById(`gap-input-${id}`);
+      if (input) {
+        input.className = "flex-1 bg-white border border-gray-300 px-3.5 py-2.5 rounded-xl text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all";
+      }
+      const hintContainer = document.getElementById(`gap-hint-container-${id}`);
+      if (hintContainer) {
+        hintContainer.classList.add('hidden');
+      }
+      const badge = document.getElementById(`gap-status-badge-${id}`);
+      if (badge) {
+        badge.classList.add('hidden');
+      }
+    }
+
+    // COMPROBACIÓN INDIVIDUAL POR PREGUNTA (SÚPER ÚTIL PARA ESTUDIAR UNO A UNO)
+    function checkSingleGap(id) {
+      const ex = gapExercises.find(e => e.id === id);
+      const input = document.getElementById(`gap-input-${id}`);
+      const userVal = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+      const hintContainer = document.getElementById(`gap-hint-container-${id}`);
+      const hintText = document.getElementById(`gap-hint-text-${id}`);
+      const badge = document.getElementById(`gap-status-badge-${id}`);
+
+      if (badge) badge.classList.remove('hidden');
+
+      if (userVal === ex.correct) {
+        if (input) input.className = "flex-1 bg-emerald-50 border border-emerald-300 px-3.5 py-2.5 rounded-xl text-xs font-bold text-emerald-800 outline-none";
+        if (hintContainer) hintContainer.classList.add('hidden');
+        if (badge) badge.innerHTML = "<span class='text-emerald-600'><i class='fa-solid fa-circle-check'></i> ¡Excelente!</span>";
+        updateScore(5);
+      } else {
+        if (input) input.className = "flex-1 bg-red-50 border border-red-200 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-red-600 outline-none";
+        if (badge) badge.innerHTML = "<span class='text-red-500'><i class='fa-solid fa-circle-xmark'></i> Incorrecto</span>";
+        
+        const message = diagnoseResponse(userVal, ex.correct, ex.baseVerb, ex.customTip);
+        if (hintText) hintText.innerHTML = message;
+        if (hintContainer) hintContainer.classList.remove('hidden');
+        updateScore(-2);
+      }
+    }
+
+    // VALIDACIÓN CON DIAGNÓSTICO DE TODA LA PESTAÑA DE EJERCICIOS SELECCIONADA
+    function checkActiveTabGaps() {
+      const filtered = gapExercises.filter(ex => ex.category === currentTab);
+      const overallFeedback = document.getElementById('gap-overall-feedback');
+      if (overallFeedback) overallFeedback.classList.remove('hidden');
+
+      let tabSuccess = true;
+      let incorrectCount = 0;
+
+      filtered.forEach(ex => {
+        const input = document.getElementById(`gap-input-${ex.id}`);
+        const userVal = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+        const hintContainer = document.getElementById(`gap-hint-container-${ex.id}`);
+        const hintText = document.getElementById(`gap-hint-text-${ex.id}`);
+        const badge = document.getElementById(`gap-status-badge-${ex.id}`);
+
+        if (badge) badge.classList.remove('hidden');
+
+        if (userVal === ex.correct) {
+          if (input) input.className = "flex-1 bg-emerald-50 border border-emerald-300 px-3.5 py-2.5 rounded-xl text-xs font-bold text-emerald-800 outline-none";
+          if (hintContainer) hintContainer.classList.add('hidden');
+          if (badge) badge.innerHTML = "<span class='text-emerald-600'><i class='fa-solid fa-circle-check'></i> ¡Excelente!</span>";
+        } else {
+          tabSuccess = false;
+          incorrectCount++;
+          if (input) input.className = "flex-1 bg-red-50 border border-red-200 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-red-600 outline-none";
+          if (badge) badge.innerHTML = "<span class='text-red-500'><i class='fa-solid fa-circle-xmark'></i> Incorrecto</span>";
+          
+          const diagnosisMessage = diagnoseResponse(userVal, ex.correct, ex.baseVerb, ex.customTip);
+          if (hintText) hintText.innerHTML = diagnosisMessage;
+          if (hintContainer) hintContainer.classList.remove('hidden');
+        }
+      });
+
+      if (tabSuccess) {
+        if (overallFeedback) {
+          overallFeedback.innerText = "¡Soberbio! Has completado todas las oraciones de esta sección sin cometer errores (+50 pts).";
+          overallFeedback.className = "text-xs font-bold text-center mt-2 text-emerald-600";
+        }
+        updateScore(50);
+      } else {
+        if (overallFeedback) {
+          overallFeedback.innerText = `Tienes ${incorrectCount} casillas incorrectas en esta sección de 15. Revisa las pistas para autocorregirte.`;
+          overallFeedback.className = "text-xs font-bold text-center mt-2 text-red-500";
+        }
+        updateScore(-10);
+      }
+    }
+
+    // ACCESIBILIDAD DE AUDIO - Optimizada para dispositivos móviles y tablets
+    function speakText(textToSpeak, lang) {
+      if (!('speechSynthesis' in window)) {
+        console.warn("Navegador incompatible con síntesis de voz.");
+        return;
+      }
+
+      window.speechSynthesis.resume();
+      window.speechSynthesis.cancel();
+
+      setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.lang = lang === 'en' ? 'en-US' : 'es-ES';
+        utterance.rate = 0.85; 
+        utterance.pitch = 1.0;
+
+        const indicator = document.getElementById('tts-global-indicator');
+        if (indicator) {
+          indicator.classList.remove('hidden');
+          indicator.classList.add('flex');
+        }
+
+        utterance.onend = function() {
+          if (indicator) {
+            indicator.classList.add('hidden');
+            indicator.classList.remove('flex');
+          }
+        };
+
+        utterance.onerror = function() {
+          if (indicator) {
+            indicator.classList.add('hidden');
+            indicator.classList.remove('flex');
+          }
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }, 50);
+    }
+
+    // DETENER AUDIO GLOBALMENTE
+    function stopAllSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      const indicator = document.getElementById('tts-global-indicator');
+      if (indicator) {
+        indicator.classList.add('hidden');
+        indicator.classList.remove('flex');
+      }
+    }
+
+    // CONTROL DEL PANEL LATERAL "EL CHIVATO"
+    function toggleCheatSheet() {
+      const panel = document.getElementById('cheat-sheet');
+      if (panel) {
+        if (panel.classList.contains('translate-x-full')) {
+          panel.classList.remove('translate-x-full');
+        } else {
+          panel.classList.add('translate-x-full');
+        }
+      }
+    }
+
+    // FILTRO BUSCADOR PARA LA TABLA TEÓRICA DE TIEMPOS
+    function filterTenses() {
+      const searchVal = document.getElementById('tense-search').value.toLowerCase();
+      const rows = document.querySelectorAll('.tense-row');
+      rows.forEach(row => {
+        const name = row.children[0].innerText.toLowerCase();
+        const formula = row.children[1].innerText.toLowerCase();
+        if (name.includes(searchVal) || formula.includes(searchVal)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+
+    // EJERCICIO 1: ORDENADOR DE FRASES (SOPORTE TÁCTIL)
+    const sentenceQuizData = [
+      {
+        active: "He wrote the letter.",
+        correct: "The letter was written by him.",
+        shuffled: ["The", "letter", "was", "written", "by", "him."]
+      },
+      {
+        active: "The police arrested the thief.",
+        correct: "The thief was arrested by the police.",
+        shuffled: ["The", "thief", "was", "arrested", "by", "the", "police."]
+      },
+      {
+        active: "They are painting the house.",
+        correct: "The house is being painted by them.",
+        shuffled: ["The", "house", "is", "being", "painted", "by", "them."]
+      },
+      {
+        active: "She has cooked the dinner.",
+        correct: "The dinner has been cooked by her.",
+        shuffled: ["The", "dinner", "has", "been", "cooked", "by", "her."]
+      },
+      {
+        active: "We will build a new bridge.",
+        correct: "A new bridge will be built by us.",
+        shuffled: ["A", "new", "bridge", "will", "be", "built", "by", "us."]
+      }
+    ];
+
+    let currentBuilderIndex = 0;
+    let selectedWords = [];
+
+    function loadSentenceBuilder() {
+      selectedWords = [];
+      const data = sentenceQuizData[currentBuilderIndex];
+      document.getElementById('active-sentence-source').innerText = `"${data.active}"`;
+      document.getElementById('builder-current-step').innerText = currentBuilderIndex + 1;
+      
+      const assemblyZone = document.getElementById('assembly-zone');
+      assemblyZone.innerHTML = '<p id="assembly-placeholder" class="text-xs text-gray-400 mx-auto pointer-events-none">Toca abajo sobre las palabras para empezar...</p>';
+      
+      const wordBank = document.getElementById('word-bank');
+      wordBank.innerHTML = '';
+      
+      const shuffledArr = [...data.shuffled].sort(() => Math.random() - 0.5);
+      
+      shuffledArr.forEach((word, idx) => {
+        const button = document.createElement('button');
+        button.innerText = word;
+        button.id = `btn-word-${idx}`;
+        button.className = "bg-white hover:bg-brand-50 border border-gray-200 hover:border-brand-200 text-gray-800 font-medium px-3.5 py-2 rounded-xl text-xs transition-all shadow-sm cursor-pointer";
+        button.onclick = () => selectWord(word, button.id);
+        wordBank.appendChild(button);
+      });
+
+      // Adjuntar audio al botón de Exercise 1 de forma segura
+      const speakBuilderBtn = document.getElementById('btn-builder-speak');
+      if (speakBuilderBtn) {
+        // Remover listeners anteriores reemplazando el nodo
+        const newBtn = speakBuilderBtn.cloneNode(true);
+        speakBuilderBtn.parentNode.replaceChild(newBtn, speakBuilderBtn);
+        newBtn.addEventListener('click', () => {
+          speakText(data.active, 'en');
+        });
+      }
+
+      document.getElementById('builder-feedback').classList.add('hidden');
+    }
+
+    function selectWord(word, btnId) {
+      const placeholder = document.getElementById('assembly-placeholder');
+      if (placeholder) placeholder.remove();
+
+      selectedWords.push({ word, btnId });
+      
+      const origBtn = document.getElementById(btnId);
+      if (origBtn) origBtn.classList.add('opacity-30', 'pointer-events-none');
+
+      const assemblyZone = document.getElementById('assembly-zone');
+      const assembledSpan = document.createElement('span');
+      assembledSpan.innerText = word;
+      assembledSpan.className = "bg-brand-500 text-white font-semibold px-3 py-1.5 rounded-xl text-xs shadow-sm shadow-brand-500/10 cursor-pointer hover:bg-brand-600 transition-all";
+      assembledSpan.onclick = () => deselectWord(word, btnId, assembledSpan);
+      assemblyZone.appendChild(assembledSpan);
+    }
+
+    function deselectWord(word, btnId, element) {
+      element.remove();
+      selectedWords = selectedWords.filter(item => !(item.word === word && item.btnId === btnId));
+      
+      const origBtn = document.getElementById(btnId);
+      if (origBtn) origBtn.classList.remove('opacity-30', 'pointer-events-none');
+
+      if (selectedWords.length === 0) {
+        const assemblyZone = document.getElementById('assembly-zone');
+        assemblyZone.innerHTML = '<p id="assembly-placeholder" class="text-xs text-gray-400 mx-auto pointer-events-none">Toca abajo sobre las palabras para empezar...</p>';
+      }
+    }
+
+    function resetSentenceBuilder() {
+      loadSentenceBuilder();
+    }
+
+    function checkSentenceBuilder() {
+      const feedback = document.getElementById('builder-feedback');
+      feedback.classList.remove('hidden');
+      
+      const builtPhrase = selectedWords.map(item => item.word).join(' ');
+      const correctPhrase = sentenceQuizData[currentBuilderIndex].correct;
+
+      if (builtPhrase === correctPhrase) {
+        feedback.innerText = "¡Excelente! Has reconstruido la oración perfectamente (+10 pts).";
+        feedback.className = "text-xs font-semibold text-center mt-2 text-emerald-600";
+        updateScore(10);
+
+        setTimeout(() => {
+          currentBuilderIndex = (currentBuilderIndex + 1) % sentenceQuizData.length;
+          loadSentenceBuilder();
+        }, 2200);
+      } else {
+        feedback.innerText = "Esa combinación no es la correcta. Revisa las reglas de 'El Chivato'.";
+        feedback.className = "text-xs font-semibold text-center mt-2 text-red-500";
+        updateScore(-5);
+      }
+    }
+
+
+    // ==========================================
+    // LÓGICA DEL DICCIONARIO DE VERBOS (A-Z) - TOTALMENTE PROGRAMÁTICA
+    // ==========================================
+
+    function renderAlphabetFilters() {
+      const alphabetDiv = document.getElementById('alphabet-filters');
+      alphabetDiv.innerHTML = "";
+
+      const uniqueLetters = ["ALL", ...new Set(verbsDatabase.map(v => v.infinitive[0].toUpperCase()))].sort();
+
+      uniqueLetters.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.innerText = letter;
+        btn.id = `filter-letter-${letter}`;
+        
+        if (letter === activeLetterFilter) {
+          btn.className = "px-3.5 py-1.5 bg-brand-500 text-white font-bold text-xs rounded-lg shadow-sm transition-all";
+        } else {
+          btn.className = "px-3.5 py-1.5 bg-gray-100 hover:bg-brand-50 text-gray-700 hover:text-brand-600 border border-gray-200 hover:border-brand-200 font-bold text-xs rounded-lg transition-all";
+        }
+
+        btn.addEventListener('click', () => {
+          setLetterFilter(letter);
+        });
+
+        alphabetDiv.appendChild(btn);
+      });
+    }
+
+    function setLetterFilter(letter) {
+      activeLetterFilter = letter;
+      renderAlphabetFilters();
+      renderVerbTable();
+    }
+
+    // Renderiza la tabla protegiendo los eventos del audio contra las comillas
+    function renderVerbTable() {
+      const tbody = document.getElementById('verb-dictionary-body');
+      const noVerbsMessage = document.getElementById('no-verbs-message');
+      const searchVal = document.getElementById('verb-search-input').value.toLowerCase().trim();
+      
+      tbody.innerHTML = "";
+
+      const filteredVerbs = verbsDatabase.filter(verb => {
+        const matchesLetter = (activeLetterFilter === "ALL") || (verb.infinitive[0].toUpperCase() === activeLetterFilter);
+        const matchesSearch = verb.infinitive.toLowerCase().includes(searchVal) || 
+                              verb.participle.toLowerCase().includes(searchVal) || 
+                              verb.translation.toLowerCase().includes(searchVal);
+        return matchesLetter && matchesSearch;
+      });
+
+      if (filteredVerbs.length === 0) {
+        if (noVerbsMessage) noVerbsMessage.classList.remove('hidden');
+      } else {
+        if (noVerbsMessage) noVerbsMessage.classList.add('hidden');
+        
+        filteredVerbs.forEach(verb => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-gray-50/50 transition-colors";
+          
+          // Columna 1: Infinitivo
+          const tdInfinitive = document.createElement('td');
+          tdInfinitive.className = "px-6 py-4 whitespace-nowrap";
+          const divInf = document.createElement('div');
+          divInf.className = "flex items-center space-x-2";
+          const spanInf = document.createElement('span');
+          spanInf.className = "font-bold text-gray-900";
+          spanInf.innerText = verb.infinitive;
+          
+          const btnInfSpeak = document.createElement('button');
+          btnInfSpeak.className = "text-gray-400 hover:text-brand-500 transition-colors p-1";
+          btnInfSpeak.title = "Escuchar infinitivo";
+          btnInfSpeak.innerHTML = `<i class="fa-solid fa-volume-high text-xs"></i>`;
+          btnInfSpeak.addEventListener('click', () => speakText(verb.infinitive, 'en'));
+          
+          divInf.appendChild(spanInf);
+          divInf.appendChild(btnInfSpeak);
+          tdInfinitive.appendChild(divInf);
+          
+          // Columna 2: Tipo de Verbo
+          const tdType = document.createElement('td');
+          tdType.className = "px-6 py-4 whitespace-nowrap";
+          const typeSpan = document.createElement('span');
+          if (verb.type === "Regular") {
+            typeSpan.className = "bg-blue-50 text-blue-600 font-semibold px-2.5 py-0.5 rounded-full text-[10px] uppercase border border-blue-100";
+          } else {
+            typeSpan.className = "bg-red-50 text-red-600 font-bold px-2.5 py-0.5 rounded-full text-[10px] uppercase border border-red-100";
+          }
+          typeSpan.innerText = verb.type;
+          tdType.appendChild(typeSpan);
+          
+          // Columna 3: Participio Pasado
+          const tdParticiple = document.createElement('td');
+          tdParticiple.className = "px-6 py-4 whitespace-nowrap";
+          const divPart = document.createElement('div');
+          divPart.className = "flex items-center space-x-2";
+          const spanPart = document.createElement('span');
+          spanPart.className = "font-bold text-brand-600";
+          spanPart.innerText = verb.participle;
+          
+          const btnPartSpeak = document.createElement('button');
+          btnPartSpeak.className = "text-brand-400 hover:text-brand-600 transition-colors p-1";
+          btnPartSpeak.title = "Escuchar participio";
+          btnPartSpeak.innerHTML = `<i class="fa-solid fa-volume-high text-xs"></i>`;
+          btnPartSpeak.addEventListener('click', () => speakText(verb.participle, 'en'));
+          
+          divPart.appendChild(spanPart);
+          divPart.appendChild(btnPartSpeak);
+          tdParticiple.appendChild(divPart);
+          
+          // Columna 4: Traducción
+          const tdTranslation = document.createElement('td');
+          tdTranslation.className = "px-6 py-4 whitespace-nowrap font-medium text-gray-500";
+          tdTranslation.innerText = verb.translation;
+          
+          // Columna 5: Ejemplo en Pasiva
+          const tdExample = document.createElement('td');
+          tdExample.className = "px-6 py-4";
+          const divEx = document.createElement('div');
+          divEx.className = "flex items-center justify-between gap-4";
+          const spanEx = document.createElement('span');
+          spanEx.className = "text-xs font-semibold text-gray-700 italic";
+          spanEx.innerText = `"${verb.passiveExample}"`;
+          
+          const btnExSpeak = document.createElement('button');
+          btnExSpeak.className = "text-gray-400 hover:text-brand-500 transition-colors p-1 flex-shrink-0";
+          btnExSpeak.title = "Escuchar ejemplo";
+          btnExSpeak.innerHTML = `<i class="fa-solid fa-volume-high text-xs"></i>`;
+          btnExSpeak.addEventListener('click', () => speakText(verb.passiveExample, 'en'));
+          
+          divEx.appendChild(spanEx);
+          divEx.appendChild(btnExSpeak);
+          tdExample.appendChild(divEx);
+          
+          // Construir Fila
+          tr.appendChild(tdInfinitive);
+          tr.appendChild(tdType);
+          tr.appendChild(tdParticiple);
+          tr.appendChild(tdTranslation);
+          tr.appendChild(tdExample);
+          
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    function filterVerbList() {
+      renderVerbTable();
+    }
+
+    // EXPORTAR TABLA DE VERBOS A EXCEL (CSV UTF-8)
+    function exportVerbsToCSV() {
+      let csvContent = "\uFEFF"; // BOM para asegurar correcta visualización de caracteres en Excel
+      csvContent += "Verbo Infinitivo,Tipo de Verbo,Participio Pasado,Traduccion,Ejemplo Pasiva\n";
+
+      verbsDatabase.forEach(verb => {
+        const inf = `"${verb.infinitive}"`;
+        const type = `"${verb.type}"`;
+        const part = `"${verb.participle}"`;
+        const trans = `"${verb.translation}"`;
+        const example = `"${verb.passiveExample.replace(/"/g, '""')}"`;
+        
+        csvContent += `${inf},${type},${part},${trans},${example}\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "Diccionario_Participios_Voz_Pasiva_B2.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // ACCIÓN DE REINICIAR TODOS LOS EJERCICIOS
+    function resetAllExercises() {
+      score = 0;
+      document.getElementById('score-counter').innerText = '0 pts';
+      currentTab = "present";
+      switchGapTab("present");
+      currentBuilderIndex = 0;
+      loadSentenceBuilder();
+      stopAllSpeech();
+    }
+
+    // ARRANQUE AUTOMÁTICO AL CARGAR LA PÁGINA
+    window.onload = function() {
+      renderGapExercises();
+      loadSentenceBuilder();
+      
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+      }
+    };
+  </script>
+</body>
+</html>
